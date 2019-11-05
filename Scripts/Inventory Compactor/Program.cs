@@ -22,27 +22,33 @@ namespace IngameScript
         private const string TAG_NAME_DEFAULT = "InvCompact";
 
 
-        private readonly bool _optInWithTag;
-        private readonly string _tagName;
-        private readonly bool _autoDetectChanges;
+        private bool _optInWithTag;
+        private string _tagName;
+        private bool _autoDetectChanges;
 
         public Program()
         {
-            Runtime.UpdateFrequency = UpdateFrequency.Update100 |  UpdateFrequency.Update10 | UpdateFrequency.Once;
+            Runtime.UpdateFrequency = UpdateFrequency.Update100;
 
+            ParseConfigData();
+            RefreshBlockList();
+        }
+
+        private void ParseConfigData()
+        {
             MyIniParseResult result;
-            if (!_myIni.TryParse(Me.CustomData, SECTION_NAME, out result))
-                throw new Exception(result.ToString());
+            _myIni.TryParse(Me.CustomData, SECTION_NAME, out result);
 
             _optInWithTag = _myIni.Get(SECTION_NAME, OPT_IN_WITH_TAG_KEY).ToBoolean();
             _tagName = _myIni.Get(SECTION_NAME, TAG_NAME_KEY).ToString(TAG_NAME_DEFAULT);
             _autoDetectChanges = _myIni.Get(SECTION_NAME, AUTO_DETECT_CHANGES_KEY).ToBoolean();
-            
-            RefreshBlockList();
         }
 
         public void Main(string argument, UpdateType updateSource)
         {
+            if((updateSource & UpdateType.Terminal) != 0)
+                ParseConfigData();
+
             var refreshMask = UpdateType.Terminal;
             if (_autoDetectChanges)
             {

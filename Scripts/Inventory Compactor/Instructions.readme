@@ -26,8 +26,11 @@ Then in the block with a inventory you would use
 
 
 By default the script only checks for new inventories to compact on game startup and whenever you hit the 
-run button from inside the terminal of the programming block. At a possible performance penalty you can
+"Run" button from inside the terminal of the programming block. At a possible performance penalty you can
 have the script auto detect any changes in inventories every 100 ticks by setting the setting 
 
 [InvCompactSettings]
 AUTO_DETECT_CHANGES=true;
+
+Any changes to the configuration must be followed by a hit of the "Run" button inside the termanal on the 
+programming block to pick up the new settings.
