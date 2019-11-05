@@ -1,0 +1,33 @@
+﻿R e a d m e
+-----------
+
+This script will attempt to compact the inventory of all inventories in the current ship/station
+(current grid + attached rotors and pistons, but not through connectors).
+
+By default the script will use all inventories on the current ship/station, you can change this
+so that you must opt-in to the compating. If you add the following Custom Data to the programming block
+
+[InvCompactSettings]
+OPT_IN_WITH_TAG=true
+
+Now the script will only affect inventories that have in their custom data a section that looks like
+
+[InvCompact]
+
+If you want to change the name the opt in section uses it can be set in the settings via 
+
+[InvCompactSettings]
+OPT_IN_WITH_TAG=true
+TAG_NAME=MyCustomTag
+
+Then in the block with a inventory you would use
+
+[MyCustomTag]
+
+
+By default the script only checks for new inventories to compact on game startup and whenever you hit the 
+run button from inside the terminal of the programming block. At a possible performance penalty you can
+have the script auto detect any changes in inventories every 100 ticks by setting the setting 
+
+[InvCompactSettings]
+AUTO_DETECT_CHANGES=true;
